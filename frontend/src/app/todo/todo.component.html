@@ -1,0 +1,18 @@
+<div class="task-container">
+  <h2>Tasks</h2>
+
+  <!-- New Task Form -->
+  <div class="new-task">
+    <input [(ngModel)]="newTaskTitle" placeholder="New task title" class="task-input"/>
+    <button (click)="addTask()" class="btn btn-add">Add</button>
+  </div>
+
+  <!-- Tasks List -->
+  <ul class="tasks-list">
+    <li *ngFor="let task of tasks" class="task-item">
+      <input type="checkbox" [(ngModel)]="task.completed" (change)="updateTask(task)" class="task-checkbox"/>
+      <input [(ngModel)]="task.title" (blur)="updateTask(task)" class="task-input"/>
+      <button (click)="deleteTask(task.id)" class="btn btn-delete">Delete</button>
+    </li>
+  </ul>
+</div>

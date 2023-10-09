@@ -1,0 +1,15 @@
+<service>
+    <id>simple-todo-frontend-service</id>
+    <name>simple-todo-frontend-service</name>
+    <description></description>
+    <executable>node</executable>
+    <arguments>C:\Gitlab-Runner\Tools\express-ng-serve\express-ng-serve.js "C:\simple-todo\frontend\frontend" 4200</arguments>
+    <logpath>C:\simple-todo\frontend\logs\</logpath>
+    <logmode>roll</logmode>
+    <log mode="roll-by-size">
+      <sizeThreshold>10240</sizeThreshold>
+      <keepFiles>5</keepFiles>
+    </log>
+    <stoptimeout>90sec</stoptimeout>
+    <stopparentprocessfirst>false</stopparentprocessfirst>
+</service>
