@@ -1,0 +1,77 @@
+$padding-standard: 10px;
+$border-radius-standard: 5px;
+$border-standard: 1px solid #ccc;
+$color-primary: #4CAF50;
+$color-danger: #f44336;
+
+
+.task-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.new-task {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-input, .btn {
+  padding: $padding-standard;
+  border-radius: $border-radius-standard;
+}
+
+.task-input {
+  border: $border-standard;
+  flex: 1;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &-add {
+    background-color: $color-primary;
+    color: white;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+    }
+  }
+
+  &-delete {
+    background-color: $color-danger;
+    color: white;
+    margin-left: 10px;
+
+    &:hover {
+      background-color: darken($color-danger, 10%);
+    }
+  }
+}
+
+.tasks-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: $padding-standard;
+  border: $border-standard;
+  border-radius: $border-radius-standard;
+  margin-bottom: 10px;
+}
+
+.task-checkbox {
+  margin-right: 10px;
+}

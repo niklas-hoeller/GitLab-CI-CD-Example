@@ -1,0 +1,161 @@
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+.cache-maven: &cache-maven
+  key:
+    files:
+      - backend/pom.xml
+  paths:
+    - backend/.m2/repository
+    - backend/target/classes/
+
+.cache-node: &cache-node
+  key:
+    files:
+      - frontend/package.json
+      - frontend/package-lock.json
+  paths:
+    - frontend/node_modules/
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+# Backend Jobs
+build-backend:
+  image: maven:3.9.4-eclipse-temurin-17
+  stage: build
+  script:
+    - cd backend
+    - mvn clean compile $MAVEN_CLI_OPTS
+  cache: 
+    <<: *cache-maven
+    policy: pull-push
+
+unit-test-backend:
+  image: maven:3.9.4-eclipse-temurin-17
+  stage: test
+  script:
+    - cd backend
+    - mvn test $MAVEN_CLI_OPTS
+  needs: ["build-backend"]
+  cache:
+    <<: *cache-maven
+    policy: pull
+
+integration-test-backend:
+  image: maven:3.9.4-eclipse-temurin-17
+  stage: test
+  script:
+    - cd backend
+    - mvn failsafe:integration-test $MAVEN_CLI_OPTS
+  needs: ["build-backend"]
+  cache:
+    <<: *cache-maven
+    policy: pull
+
+package-backend:
+  image: maven:3.9.4-eclipse-temurin-17
+  stage: package
+  script:
+    - cd backend
+    - mvn package $MAVEN_CLI_OPTS -DskipTests
+  needs: ["unit-test-backend", "integration-test-backend"]
+  artifacts:
+    paths:
+      - backend/target/*.jar
+  cache:
+    <<: *cache-maven
+    policy: pull
+
+deploy-backend:
+  tags:
+    - ptj-spf4
+  stage: deploy
+  script:
+    - cd backend
+    - copy target\\*.jar C:\\simple-todo\\backend\\
+    - Push-Location C:\Gitlab-Runner\Tools\winsw
+    - |
+      if (Get-Service simple-todo-backend-service -ErrorAction SilentlyContinue) { 
+        .\winsw.exe stop; 
+        .\winsw.exe uninstall "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
+      }
+    - .\winsw.exe install "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
+    - .\winsw.exe start "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
+    - Pop-Location
+  needs: ["package-backend"]
+  dependencies: ["package-backend"]
+  when: manual
+  resource_group: deploy
+  cache:
+    <<: *cache-maven
+    policy: pull
+
+
+# Frontend Jobs
+build-frontend:
+  image: registry.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example
+  stage: build
+  script:
+    - cd frontend
+    - npm ci
+  cache:
+    <<: *cache-node
+    policy: pull-push
+
+test-frontend:
+  image: registry.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example
+  stage: test
+  script:
+    - export DBUS_SESSION_BUS_ADDRESS=/dev/null
+    - cd frontend
+    - npm install
+    - npx ng test --watch=false
+  needs: ["build-frontend"]
+  cache:
+    <<: *cache-node
+    policy: pull
+
+package-frontend:
+  image: registry.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example
+  stage: package
+  script:
+    - cd frontend
+    - npm install
+    - npx ng build -c production
+  needs: ["test-frontend"]
+  artifacts:
+    paths:
+      - frontend/dist/
+  cache:
+    <<: *cache-node
+    policy: pull
+
+deploy-frontend:
+  tags:
+    - ptj-spf4
+  stage: deploy
+  script:
+    - cd frontend
+    - Remove-Item -Path "C:\\simple-todo\\frontend\\*" -Recurse -Force
+    - Copy-Item -Path "dist\\*" -Destination "C:\\simple-todo\\frontend\\" -Recurse -Force
+    - Push-Location C:\Gitlab-Runner\Tools\winsw
+    - |
+      if (Get-Service simple-todo-frontend-service -ErrorAction SilentlyContinue) { 
+        .\winsw.exe stop "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"; 
+        .\winsw.exe uninstall "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
+      }
+    - .\winsw.exe install "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
+    - .\winsw.exe start "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
+    - Pop-Location
+  dependencies: ["package-frontend"]
+  when: manual
+  resource_group: deploy
+  cache:
+    <<: *cache-node
+    policy: pull
+

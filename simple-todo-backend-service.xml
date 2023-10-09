@@ -1,0 +1,17 @@
+<service>
+    <id>simple-todo-backend-service</id>
+    <name>simple-todo-backend-service</name>
+    <description>This is a service for simple-todo-backend</description>
+	<workingdirectory>C:\simple-todo\backend\</workingdirectory>
+	<env name="SPRING_PROFILES_ACTIVE" value="test"/>
+    <executable>java</executable>
+    <arguments>-jar C:\simple-todo\backend\simple-todo-0.0.1-SNAPSHOT.jar</arguments>
+    <logpath>C:\simple-todo\backend\logs\</logpath>
+    <logmode>roll</logmode>
+    <log mode="roll-by-size">
+      <sizeThreshold>10240</sizeThreshold>
+      <keepFiles>5</keepFiles>
+    </log>
+    <stoptimeout>90sec</stoptimeout>
+    <stopparentprocessfirst>false</stopparentprocessfirst>
+</service>
