@@ -81,7 +81,7 @@ deploy-backend:
     - Push-Location C:\Gitlab-Runner\Tools\winsw
     - |
       if (Get-Service simple-todo-backend-service -ErrorAction SilentlyContinue) { 
-        .\winsw.exe stop; 
+        .\winsw.exe stop "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"; 
         .\winsw.exe uninstall "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
       }
     - .\winsw.exe install "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
