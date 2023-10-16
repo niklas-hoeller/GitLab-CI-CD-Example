@@ -138,6 +138,10 @@ test-frontend:
     - npm install
     - npx ng test --no-watch --code-coverage
   needs: ["build-frontend"]
+  artifacts:
+    paths:
+      - frontend/coverage/simple-todo-frontend/
+  coverage: '/Statements\s*:\s*\d*.\d*%\s*\((\d*\/\d*)\)/'
   cache:
     <<: *cache-node
     policy: pull
