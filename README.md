@@ -1,11 +1,11 @@
 # TodoList-CI-CD-Demo
 
-**Backend Status:** ![Backend Status](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=integration-test-backend)
-**Backend Deployment:** ![Backend Deployment](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=deploy-backend)
-**Frontend Status:** ![Frontend Status](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=test-frontend)
-**Frontend Deployment:** ![Frontend Deployment](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=deploy-frontend)
-
 An integrated Todo List application designed as a CI/CD demonstration.
+
+|                     | Backend      |                                                                        Frontend                                                                         |
+|---------------------|:------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| **Build & Test**    | ![Backend Status](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=integration-test-backend) |    ![Frontend Status](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=test-frontend)     |
+| **Deployment**      | ![Backend Deployment](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=deploy-backend) | ![Frontend Deployment](https://gitlab.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example/badges/main/pipeline.svg?job=deploy-frontend)  |
 
 ## Project Overview
 
