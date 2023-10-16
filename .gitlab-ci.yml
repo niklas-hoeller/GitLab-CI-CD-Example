@@ -45,6 +45,9 @@ unit-test-backend:
     - cd backend
     - mvn test $MAVEN_CLI_OPTS
   needs: ["build-backend"]
+  artifacts:
+    paths:
+      - backend/target/site/jacoco/
   cache:
     <<: *cache-maven
     policy: pull
