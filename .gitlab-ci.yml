@@ -139,12 +139,13 @@ test-frontend:
     - cd frontend
     - npm install
     - npx ng test --no-watch --code-coverage
-    - cat frontend/coverage/simple-todo-frontend/lcov.info | grep 'Statements'
+    - |
+      awk -F'[:%()]' '/Statements/ { print $2, $3, "statements covered"; printf "%.2f%% covered\n", $2 }' frontend/coverage/simple-todo-frontend/lcov.info
   needs: ["build-frontend"]
   artifacts:
     paths:
       - frontend/coverage/simple-todo-frontend/
-  coverage: '/Statements\s*:\s*\d*.\d*%\s*\((\d*\/\d*)\)/'
+  coverage: '/(\d+\.\d+)% covered/'
   cache:
     <<: *cache-node
     policy: pull
