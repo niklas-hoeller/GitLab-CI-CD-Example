@@ -44,6 +44,8 @@ unit-test-backend:
   script:
     - cd backend
     - mvn test $MAVEN_CLI_OPTS
+    - |
+      awk -F"," '{ instructions += $4 + $5; covered += $5 } END { printf "%d / %d instructions covered\n", covered, instructions; printf "%.2f%% covered\n", 100*covered/instructions }' target/site/jacoco/jacoco.csv
   artifacts:
     paths:
       - backend/target/site/jacoco/
