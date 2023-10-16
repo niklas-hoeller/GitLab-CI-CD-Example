@@ -34,6 +34,9 @@ build-backend:
   cache: 
     <<: *cache-maven
     policy: pull-push
+  rules:
+    - changes:
+      - backend/**/*
 
 unit-test-backend:
   image: maven:3.9.4-eclipse-temurin-17
@@ -45,6 +48,9 @@ unit-test-backend:
   cache:
     <<: *cache-maven
     policy: pull
+  rules:
+    - changes:
+      - backend/**/*
 
 integration-test-backend:
   image: maven:3.9.4-eclipse-temurin-17
@@ -56,6 +62,9 @@ integration-test-backend:
   cache:
     <<: *cache-maven
     policy: pull
+  rules:
+    - changes:
+      - backend/**/*
 
 package-backend:
   image: maven:3.9.4-eclipse-temurin-17
@@ -70,6 +79,9 @@ package-backend:
   cache:
     <<: *cache-maven
     policy: pull
+  rules:
+    - changes:
+      - backend/**/*
 
 deploy-backend:
   tags:
@@ -106,6 +118,9 @@ build-frontend:
   cache:
     <<: *cache-node
     policy: pull-push
+  rules:
+    - changes:
+      - frontend/**/*
 
 test-frontend:
   image: registry.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example
@@ -119,6 +134,9 @@ test-frontend:
   cache:
     <<: *cache-node
     policy: pull
+  rules:
+    - changes:
+      - frontend/**/*
 
 package-frontend:
   image: registry.fz-juelich.de/ptj-spf4/ptj-spf-4-se/continuous-integration-example
@@ -134,6 +152,9 @@ package-frontend:
   cache:
     <<: *cache-node
     policy: pull
+  rules:
+    - changes:
+      - frontend/**/*
 
 deploy-frontend:
   tags:
