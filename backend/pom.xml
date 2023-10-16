@@ -76,7 +76,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>-Dspring.profiles.active=test</argLine>
+                    <argLine>${jacocoArgLine} -Dspring.profiles.active=test</argLine>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
@@ -86,7 +86,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
-                    <argLine>-Dspring.profiles.active=test</argLine>
+                    <argLine>${jacocoArgLine} -Dspring.profiles.active=test</argLine>
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>
@@ -101,6 +101,27 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <propertyName>jacocoArgLine</propertyName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
