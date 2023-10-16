@@ -139,6 +139,7 @@ test-frontend:
     - cd frontend
     - npm install
     - npx ng test --no-watch --code-coverage
+    - cat frontend/coverage/simple-todo-frontend/lcov.info | grep 'Statements'
   needs: ["build-frontend"]
   artifacts:
     paths:
