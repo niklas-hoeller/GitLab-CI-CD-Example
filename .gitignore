@@ -9,30 +9,26 @@ Thumbs.db
 *.iml
 *.ipr
 
-# Java
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Java & Maven & Spring Tool Suite
+backend/target/
+backend/!.mvn/wrapper/maven-wrapper.jar
+backend/!**/src/main/**/target/
+backend/!**/src/test/**/target/
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
 
-# Spring Tool Suite
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-# Node
-/node_modules
-npm-debug.log
-
-# Angular
-/dist
-/out-tsc
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/typings
+# Node & Angular
+frontend/node_modules/
+frontend/npm-debug.log
+frontend/dist/
+frontend/out-tsc/
+frontend/.angular/cache
+frontend/.sass-cache/
+frontend/connect.lock
+frontend/coverage
+frontend/typings
