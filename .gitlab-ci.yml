@@ -106,6 +106,9 @@ deploy-backend:
   cache:
     <<: *cache-maven
     policy: pull
+  rules:
+    - changes:
+      - backend/**/*
 
 
 # Frontend Jobs
@@ -179,4 +182,7 @@ deploy-frontend:
   cache:
     <<: *cache-node
     policy: pull
+  rules:
+    - changes:
+      - backend/**/*
 
