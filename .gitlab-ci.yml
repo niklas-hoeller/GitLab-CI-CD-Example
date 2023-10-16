@@ -188,5 +188,5 @@ deploy-frontend:
     policy: pull
   rules:
     - changes:
-      - backend/**/*
+      - frontend/**/*
 
