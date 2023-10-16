@@ -142,7 +142,7 @@ test-frontend:
   needs: ["build-frontend"]
   artifacts:
     paths:
-      - frontend/coverage/simple-todo-frontend/
+      - frontend/coverage/frontend
   coverage: '/Statements\s*:\s*(\d+\.\d+)%/'
   cache:
     <<: *cache-node
