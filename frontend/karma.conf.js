@@ -24,15 +24,12 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
-    coverageReporter: {
+    coverageIstanbulReporter: {
       dir: require('path').join(__dirname, './coverage/frontend'),
-      subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
-      ]
+      reports: ['html', 'lcovonly', 'text-summary'],
+      fixWebpackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'coverage-istanbul'],
     browsers: ['ChromeHeadlessCustom'],
     customLaunchers: {
       ChromeHeadlessCustom: {
