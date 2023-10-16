@@ -136,7 +136,7 @@ test-frontend:
     - export DBUS_SESSION_BUS_ADDRESS=/dev/null
     - cd frontend
     - npm install
-    - npx ng test --watch=false
+    - npx ng test --no-watch --code-coverage
   needs: ["build-frontend"]
   cache:
     <<: *cache-node
