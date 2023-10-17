@@ -95,13 +95,14 @@ deploy-backend:
   stage: deploy
   script:
     - cd backend
-    - copy target\\*.jar C:\\simple-todo\\backend\\
     - Push-Location C:\Gitlab-Runner\Tools\winsw
     - |
       if (Get-Service simple-todo-backend-service -ErrorAction SilentlyContinue) { 
         .\winsw.exe stop "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"; 
         .\winsw.exe uninstall "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
       }
+    - Remove-Item -Path C:\simple-todo\backend\*.jar -Force
+    - copy target\\*.jar C:\\simple-todo\\backend\\
     - .\winsw.exe install "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
     - .\winsw.exe start "$CI_PROJECT_DIR\\simple-todo-backend-service.xml"
     - Pop-Location
@@ -175,14 +176,14 @@ deploy-frontend:
   stage: deploy
   script:
     - cd frontend
-    - Remove-Item -Path "C:\\simple-todo\\frontend\\*" -Recurse -Force
-    - Copy-Item -Path "dist\\*" -Destination "C:\\simple-todo\\frontend\\" -Recurse -Force
     - Push-Location C:\Gitlab-Runner\Tools\winsw
     - |
       if (Get-Service simple-todo-frontend-service -ErrorAction SilentlyContinue) { 
         .\winsw.exe stop "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"; 
         .\winsw.exe uninstall "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
       }
+    - Remove-Item -Path "C:\\simple-todo\\frontend\\*" -Recurse -Force
+    - Copy-Item -Path "dist\\*" -Destination "C:\\simple-todo\\frontend\\" -Recurse -Force
     - .\winsw.exe install "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
     - .\winsw.exe start "$CI_PROJECT_DIR\\simple-todo-frontend-service.xml"
     - Pop-Location
